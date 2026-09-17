@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Programme Fitness — 4 jours</title>
+  <style>
+    :root {
+      --bg: #f4f6f8;
+      --card: #ffffff;
+      --ink: #14212b;
+      --muted: #5c6b76;
+      --accent: #0f6e56;
+      --accent-soft: #e6f3ef;
+      --line: #d7dee4;
+      --warn: #8a5a00;
+      --warn-bg: #fff6e5;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: "Segoe UI", system-ui, sans-serif;
+      background: var(--bg);
+      color: var(--ink);
+      line-height: 1.5;
+    }
+    header {
+      background: var(--ink);
+      color: #fff;
+      padding: 2.5rem 1.25rem 2rem;
+    }
+    header .wrap, main { max-width: 980px; margin: 0 auto; }
+    h1 { margin: 0 0 0.4rem; font-size: 1.85rem; letter-spacing: -0.02em; }
+    h2 {
+      margin: 2.25rem 0 0.85rem;
+      font-size: 1.35rem;
+      border-bottom: 2px solid var(--accent);
+      padding-bottom: 0.35rem;
+    }
+    h3 { margin: 1.25rem 0 0.5rem; font-size: 1.1rem; }
+    p, li { color: var(--ink); }
+    .muted { color: var(--muted); }
+    .chips { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 1rem; }
+    .chip {
+      background: rgba(255,255,255,0.12);
+      border: 1px solid rgba(255,255,255,0.2);
+      padding: 0.3rem 0.7rem;
+      border-radius: 999px;
+      font-size: 0.85rem;
+    }
+    main { padding: 1.5rem 1.25rem 3rem; }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      gap: 0.75rem;
+    }
+    .stat, .card, .ex {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      padding: 1rem;
+    }
+    .stat strong { display: block; font-size: 1.35rem; color: var(--accent); }
+    .stat span { font-size: 0.85rem; color: var(--muted); }
+    .callout {
+      background: var(--warn-bg);
+      border-left: 4px solid var(--warn);
+      padding: 0.9rem 1rem;
+      border-radius: 0 10px 10px 0;
+      margin: 1rem 0;
+    }
+    .callout.info {
+      background: var(--accent-soft);
+      border-left-color: var(--accent);
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      overflow: hidden;
+      font-size: 0.95rem;
+    }
+    th, td {
+      text-align: left;
+      padding: 0.7rem 0.85rem;
+      border-bottom: 1px solid var(--line);
+      vertical-align: top;
+    }
+    th { background: #eef2f5; font-size: 0.82rem; text-transform: uppercase; letter-spacing: 0.03em; color: var(--muted); }
+    tr:last-child td { border-bottom: none; }
+    .day-title {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.75rem;
+      margin-top: 1.75rem;
+    }
+    .badge {
+      background: var(--accent);
+      color: #fff;
+      font-size: 0.78rem;
+      padding: 0.25rem 0.6rem;
+      border-radius: 999px;
+      white-space: nowrap;
+    }
+    .ex-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 1rem;
+      margin-top: 0.85rem;
+    }
+    .ex img {
+      width: 100%;
+      aspect-ratio: 4 / 3;
+      object-fit: cover;
+      border-radius: 8px;
+      background: #e8edf1;
+      margin-bottom: 0.65rem;
+    }
+    .ex h4 { margin: 0 0 0.25rem; font-size: 1rem; }
+    .ex .meta { font-size: 0.88rem; color: var(--muted); margin-bottom: 0.4rem; }
+    .ex .cue { font-size: 0.88rem; margin: 0; }
+    .meal-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 0.75rem;
+    }
+    footer {
+      max-width: 980px;
+      margin: 0 auto 2rem;
+      padding: 0 1.25rem;
+      color: var(--muted);
+      font-size: 0.85rem;
+    }
+    @media print {
+      header { background: #000; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+      .ex { break-inside: avoid; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="wrap">
+      <h1>Programme fitness structuré</h1>
+      <p class="muted" style="color:#c9d4dc; margin:0;">
+        Femme · 80 kg · 169,5 cm · IMC ≈ 27,8 · 4 séances / semaine (mardi, jeudi, samedi, dimanche)
+      </p>
+      <div class="chips">
+        <span class="chip">Profil femme</span>
+        <span class="chip">Split Upper / Lower</span>
+        <span class="chip">Objectif : −0,5 à −0,75 kg / sem</span>
+        <span class="chip">1 700–1 950 kcal / jour</span>
+        <span class="chip">145–165 g protéines</span>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <div class="grid">
+      <div class="stat"><strong>27,8</strong><span>IMC actuel</span></div>
+      <div class="stat"><strong>4 jours</strong><span>Salle / semaine</span></div>
+      <div class="stat"><strong>60–75 min</strong><span>Durée séance</span></div>
+      <div class="stat"><strong>−0,5 à −0,75 kg</strong><span>Perte cible / semaine</span></div>
+    </div>
+
+    <div class="callout">
+      <strong>Perte 0,5–1 kg / semaine :</strong>
+      0,5 kg = très bien et durable. 0,75 kg = OK si énergie/sommeil OK.
+      1 kg = maximum — plus agressif, fatigue possible. On cible surtout <strong>0,5–0,75 kg</strong>
+      avec <strong>1 700–1 950 kcal</strong> (ne pas descendre sous ~1 650 kcal).
+      Profil femme (~25–35 ans). Ce n’est pas un avis médical.
+    </div>
+
+    <h2>1. Planning de la semaine</h2>
+    <table>
+      <thead>
+        <tr><th>Jour</th><th>Séance</th><th>Focus musculaire</th><th>Repos</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Mardi</td><td><strong>Upper A</strong></td><td>Pectoraux, épaules, triceps</td><td>Push</td></tr>
+        <tr><td>Jeudi</td><td><strong>Lower A</strong></td><td>Quadriceps, fessiers, mollets</td><td>Quad focus</td></tr>
+        <tr><td>Lun / Mer / Ven</td><td>Repos</td><td>Récupération</td><td>Marche 6–8 000 pas</td></tr>
+        <tr><td>Samedi</td><td><strong>Upper B</strong></td><td>Dos, biceps, rear delts</td><td>Pull</td></tr>
+        <tr><td>Dimanche</td><td><strong>Lower B</strong></td><td>Ischios, fessiers, mollets</td><td>Posterior chain</td></tr>
+      </tbody>
+    </table>
+
+    <div class="callout info">
+      <strong>Progression :</strong> quand tu fais facilement le haut de la fourchette de reps,
+      augmente la charge de +2,5 à +5 kg à la séance suivante. Repos 90–120 s (composés), 60–75 s (isolation).
+      Échauffement : 5–8 min vélo/rameur + 1–2 séries légères sur le 1er exercice.
+    </div>
+
+    <h2>2. Mardi — Upper A (Push)</h2>
+    <div class="day-title"><h3 style="margin:0">Pectoraux · Épaules · Triceps</h3><span class="badge">Jour 1</span></div>
+    <div class="ex-grid">
+      <article class="ex">
+        <img src="exercices/01-chest-press.png" alt="Chest press machine" />
+        <h4>1. Chest press (presse poitrine)</h4>
+        <div class="meta">Machine pec / chest press · 4 × 8–12</div>
+        <p class="cue">Coudes ~45°, omoplates serrées, ne bloque pas les coudes en force.</p>
+      </article>
+      <article class="ex">
+        <img src="exercices/14-pec-deck.png" alt="Pec deck" />
+        <h4>2. Pec deck (butterfly)</h4>
+        <div class="meta">Machine écarté · 3 × 10–15</div>
+        <p class="cue">Mouvement contrôlé, légère flexion des coudes, étire puis resserre.</p>
+      </article>
+      <article class="ex">
+        <img src="exercices/04-shoulder-press.png" alt="Shoulder press" />
+        <h4>3. Shoulder press</h4>
+        <div class="meta">Machine militaire · 3 × 8–12</div>
+        <p class="cue">Pousse verticalement sans cambrer le bas du dos.</p>
+      </article>
+      <article class="ex">
+        <img src="exercices/05-lateral-raise.png" alt="Élévations latérales" />
+        <h4>4. Élévations latérales</h4>
+        <div class="meta">Haltères · 3 × 12–15</div>
+        <p class="cue">Jusqu’à hauteur d’épaules, petit angle au coude, pas d’élan.</p>
+      </article>
+      <article class="ex">
+        <img src="exercices/06-tricep-pushdown.png" alt="Triceps pushdown" />
+        <h4>5. Triceps pushdown</h4>
+        <div class="meta">Poulie haute · 3 × 10–15</div>
+        <p class="cue">Coudes collés au corps, seule l’avant-bras bouge.</p>
+      </article>
+    </div>
+
+    <h2>3. Jeudi — Lower A (Quad focus)</h2>
+    <div class="day-title"><h3 style="margin:0">Quadriceps · Fessiers · Mollets</h3><span class="badge">Jour 2</span></div>
+    <div class="ex-grid">
+      <article class="ex">
+        <img src="exercices/08-leg-press.png" alt="Leg press" />
+        <h4>1. Leg press (presse à cuisses)</h4>
+        <div class="meta">Machine presse · 4 × 10–15</div>
+        <p class="cue">Pieds milieu de la plateforme, genoux alignés avec les orteils, ne descends pas trop bas si le bas du dos décolle.</p>
+      </article>
+      <article class="ex">
+        <img src="exercices/10-leg-extension.png" alt="Leg extension" />
+        <h4>2. Leg extension</h4>
+        <div class="meta">Machine extension · 3 × 12–15</div>
+        <p class="cue">Extension complète contrôlée, 1 seconde en haut.</p>
+      </article>
+      <article class="ex">
+        <img src="exercices/16-lunge.png" alt="Fentes" />
+        <h4>3. Fentes marchées</h4>
+        <div class="meta">Haltères · 3 × 10 / jambe</div>
+        <p class="cue">Torse droit, genou avant au-dessus du pied, pas trop long.</p>
+      </article>
+      <article class="ex">
+        <img src="exercices/12-hip-thrust.png" alt="Hip thrust" />
+        <h4>4. Hip thrust</h4>
+        <div class="meta">Machine / barre · 3 × 10–12</div>
+        <p class="cue">Pousse avec les talons, serre les fessiers en haut 1 s.</p>
+      </article>
+      <article class="ex">
+        <img src="exercices/13-calf-raise.png" alt="Mollets" />
+        <h4>5. Mollets debout</h4>
+        <div class="meta">Calf raise machine · 4 × 12–20</div>
+        <p class="cue">Amplitude complète, pause en haut, descente lente.</p>
+      </article>
+    </div>
+
+    <h2>4. Samedi — Upper B (Pull)</h2>
+    <div class="day-title"><h3 style="margin:0">Dos · Biceps · Épaules postérieures</h3><span class="badge">Jour 3</span></div>
+    <div class="ex-grid">
+      <article class="ex">
+        <img src="exercices/02-lat-pulldown.png" alt="Lat pulldown" />
+        <h4>1. Lat pulldown (tirage vertical)</h4>
+        <div class="meta">Machine tirage · 4 × 8–12</div>
+        <p class="cue">Tire vers le haut de la poitrine, coudes vers le bas/arrière, poitrine haute.</p>
+      </article>
+      <article class="ex">
+        <img src="exercices/03-seated-row.png" alt="Seated row" />
+        <h4>2. Seated row (row assis)</h4>
+        <div class="meta">Machine row · 4 × 8–12</div>
+        <p class="cue">Tire vers le nombril, serres les omoplates, pas d’à-coups.</p>
+      </article>
+      <article class="ex">
+        <img src="exercices/15-face-pull.png" alt="Face pulls" />
+        <h4>3. Face pulls</h4>
+        <div class="meta">Poulie + corde · 3 × 12–15</div>
+        <p class="cue">Tire vers le visage, rotation externe des épaules en fin de mouvement.</p>
+      </article>
+      <article class="ex">
+        <img src="exercices/07-bicep-curl.png" alt="Curl biceps" />
+        <h4>4. Curl biceps</h4>
+        <div class="meta">Haltères ou machine · 3 × 10–12</div>
+        <p class="cue">Coudes fixes, descente contrôlée 2–3 secondes.</p>
+      </article>
+    </div>
+
+    <h2>5. Dimanche — Lower B (Posterior)</h2>
+    <div class="day-title"><h3 style="margin:0">Ischios · Fessiers · Mollets</h3><span class="badge">Jour 4</span></div>
+    <div class="ex-grid">
+      <article class="ex">
+        <img src="exercices/09-rdl.png" alt="Romanian deadlift" />
+        <h4>1. Romanian deadlift (RDL)</h4>
+        <div class="meta">Barre ou haltères · 4 × 8–10</div>
+        <p class="cue">Hinge hanches, dos plat, barre près des jambes, étire les ischios.</p>
+      </article>
+      <article class="ex">
+        <img src="exercices/11-leg-curl.png" alt="Leg curl" />
+        <h4>2. Leg curl (ischio machine)</h4>
+        <div class="meta">Machine curl · 3 × 10–15</div>
+        <p class="cue">Contracte en haut, redescends sans lâcher le poids.</p>
+      </article>
+      <article class="ex">
+        <img src="exercices/12-hip-thrust.png" alt="Hip thrust" />
+        <h4>3. Hip thrust</h4>
+        <div class="meta">Machine / barre · 3 × 10–12</div>
+        <p class="cue">Même mouvement que jeudi, charge un peu plus lourde si possible.</p>
+      </article>
+      <article class="ex">
+        <img src="exercices/08-leg-press.png" alt="Leg press pieds hauts" />
+        <h4>4. Leg press (pieds hauts)</h4>
+        <div class="meta">Presse · 3 × 10–12</div>
+        <p class="cue">Pieds plus hauts sur la plateforme pour cibler fessiers/ischios.</p>
+      </article>
+      <article class="ex">
+        <img src="exercices/13-calf-raise.png" alt="Mollets" />
+        <h4>5. Mollets + finition cardio</h4>
+        <div class="meta">Calf 4 × 12–20 · puis 10–15 min marche inclinée</div>
+        <p class="cue">Finis par une marche rapide inclinée pour brûler un peu plus sans tout casser.</p>
+      </article>
+    </div>
+
+    <h2>6. Nutrition (profil femme — perte 0,5–0,75 kg/sem)</h2>
+    <div class="grid">
+      <div class="stat"><strong>1 700–1 950</strong><span>kcal / jour</span></div>
+      <div class="stat"><strong>145–165 g</strong><span>Protéines</span></div>
+      <div class="stat"><strong>140–190 g</strong><span>Glucides</span></div>
+      <div class="stat"><strong>50–65 g</strong><span>Lipides</span></div>
+    </div>
+
+    <div class="callout info">
+      <strong>Eau :</strong> 2,5–3 L / jour.
+      Si le poids ne bouge pas en 2 semaines → −150 kcal (plancher ~1 650).
+      Si tu perds plus de 1 kg / semaine → +150–200 kcal.
+      Les séances restent les mêmes (Upper/Lower) : hip thrust, fentes et RDL prioritaires.
+    </div>
+
+    <h3>Journée type (~1 850 kcal)</h3>
+    <table>
+      <thead>
+        <tr><th>Repas</th><th>Exemple concret</th><th>≈ kcal</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Petit-déjeuner</td>
+          <td>2 œufs + 2 blancs + 50 g flocons d’avoine + 1 fruit + 150 g yaourt grec</td>
+          <td>480</td>
+        </tr>
+        <tr>
+          <td>Déjeuner</td>
+          <td>150 g poulet + 60 g riz (poids cru) cuit + légumes + 1 c.à.c huile d’olive</td>
+          <td>520</td>
+        </tr>
+        <tr>
+          <td>Collation</td>
+          <td>200 g fromage blanc 0% + 1 fruit <em>ou</em> 1 scoop whey</td>
+          <td>250</td>
+        </tr>
+        <tr>
+          <td>Dîner</td>
+          <td>150 g poisson/viande maigre + 200 g pomme de terre/patate douce + salade</td>
+          <td>600</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h3>Liste courses utiles</h3>
+    <div class="meal-grid">
+      <div class="card">
+        <strong>Protéines</strong>
+        <p class="muted">Poulet, dinde, thon, œufs, yaourt grec, fromage blanc, whey, poisson, boeuf 5%, lentilles</p>
+      </div>
+      <div class="card">
+        <strong>Glucides</strong>
+        <p class="muted">Riz, pâtes, avoine, pain complet, patate douce, fruits, quinoa</p>
+      </div>
+      <div class="card">
+        <strong>Lipides</strong>
+        <p class="muted">Huile d’olive, avocat, amandes, beurre de cacahuète (mesuré), saumon 2×/semaine</p>
+      </div>
+    </div>
+
+    <h2>7. Suivi (rapport simple)</h2>
+    <table>
+      <thead>
+        <tr><th>Quoi</th><th>Quand</th><th>Objectif</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Poids</td><td>1× / semaine, à jeun, même jour</td><td>−0,5 à −0,75 kg / sem (max ~1 kg)</td></tr>
+        <tr><td>Tour de taille</td><td>Toutes les 2 semaines</td><td>Baisse progressive</td></tr>
+        <tr><td>Photos face + profil</td><td>Toutes les 2 semaines</td><td>Même lumière / miroir</td></tr>
+        <tr><td>Charges en salle</td><td>Chaque séance (note sur téléphone)</td><td>Progression lente</td></tr>
+        <tr><td>Sommeil</td><td>Chaque nuit</td><td>7–8 h</td></tr>
+      </tbody>
+    </table>
+
+    <div class="callout">
+      <strong>Mini carnet à noter après chaque séance :</strong>
+      date · séance (Upper A / Lower A / …) · exercices + charge + reps · énergie (1–5) · sommeil de la veille.
+    </div>
+  </main>
+
+  <footer>
+    Guide généré pour ton profil (80 kg / 169,5 cm). Ouvre ce fichier dans ton navigateur.
+    Les images sont dans le dossier <code>exercices/</code>.
+  </footer>
+</body>
+</html>
